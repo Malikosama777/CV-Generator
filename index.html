@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Animated CV Generator</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Animated Background Gradient (navy blue and black) */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #000428, #001f3f, #000428);
+      background-size: 600% 600%;
+      animation: gradientAnimation 15s ease infinite;
+      z-index: -2;
+    }
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* White animated design elements */
+    .white-design {
+      position: fixed;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite;
+      z-index: -1;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { transform: translateY(0) scale(1); }
+    }
+    .white-design.one {
+      width: 150px;
+      height: 150px;
+      top: 10%;
+      left: 5%;
+    }
+    .white-design.two {
+      width: 100px;
+      height: 100px;
+      top: 70%;
+      left: 80%;
+      animation-duration: 10s;
+    }
+    .white-design.three {
+      width: 200px;
+      height: 200px;
+      top: 50%;
+      left: 30%;
+      animation-duration: 12s;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen">
+  <!-- Background Animation -->
+  <div class="animated-bg"></div>
+  <!-- White Floating Design Elements -->
+  <div class="white-design one"></div>
+  <div class="white-design two"></div>
+  <div class="white-design three"></div>
+
+  <!-- Main Content Container (placed above background elements) -->
+  <div class="relative z-10 max-w-6xl mx-auto px-4 py-10">
+    <h1 class="text-4xl md:text-5xl font-bold text-center text-white mb-10 drop-shadow-lg">
+      CV Generator
+    </h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Form Section -->
+      <div class="bg-white bg-opacity-90 backdrop-blur-md rounded-lg shadow-xl p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          Enter Your Details
+        </h2>
+        <form id="cvForm" class="space-y-4">
+          <div>
+            <label for="fullName" class="block text-gray-700">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required
+              class="mt-1 w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+          </div>
+          <div>
+            <label for="email" class="block text-gray-700">Email</label>
+            <input type="email" id="email" name="email" required
+              class="mt-1 w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+          </div>
+          <div>
+            <label for="phone" class="block text-gray-700">Phone</label>
+            <input type="text" id="phone" name="phone" required
+              class="mt-1 w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+          </div>
+          <div>
+            <label for="summary" class="block text-gray-700">Professional Summary</label>
+            <textarea id="summary" name="summary" rows="3" required
+              class="mt-1 w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"></textarea>
+          </div>
+          <div>
+            <label for="education" class="block text-gray-700">Education</label>
+            <textarea id="education" name="education" rows="3" placeholder="Enter your education details" required
+              class="mt-1 w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"></textarea>
+          </div>
+          <div>
+            <label for="experience" class="block text-gray-700">Experience</label>
+            <textarea id="experience" name="experience" rows="3" placeholder="Enter your work experience" required
+              class="mt-1 w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"></textarea>
+          </div>
+          <div>
+            <label for="skills" class="block text-gray-700">Skills</label>
+            <textarea id="skills" name="skills" rows="2" placeholder="Enter your skills" required
+              class="mt-1 w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"></textarea>
+          </div>
+          <button type="submit"
+            class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+            Generate CV
+          </button>
+        </form>
+      </div>
+
+      <!-- CV Preview Section -->
+      <div class="bg-white bg-opacity-90 backdrop-blur-md rounded-lg shadow-xl p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">CV Preview</h2>
+        <div id="cvPreview" class="space-y-6">
+          <div class="text-center">
+            <h1 id="cvName" class="text-3xl font-bold text-gray-800">
+              Your Name
+            </h1>
+            <p class="text-gray-600">
+              Email: <span id="cvEmail">example@example.com</span> |
+              Phone: <span id="cvPhone">000-000-0000</span>
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-gray-800 border-b pb-1">Professional Summary</h3>
+            <p id="cvSummary" class="text-gray-600 whitespace-pre-line">
+              Your professional summary will appear here.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-gray-800 border-b pb-1">Education</h3>
+            <p id="cvEducation" class="text-gray-600 whitespace-pre-line">
+              Your education details will appear here.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-gray-800 border-b pb-1">Experience</h3>
+            <p id="cvExperience" class="text-gray-600 whitespace-pre-line">
+              Your work experience will appear here.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-gray-800 border-b pb-1">Skills</h3>
+            <p id="cvSkills" class="text-gray-600 whitespace-pre-line">
+              Your skills will appear here.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Advanced JavaScript for Dynamic Updates -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('cvForm');
+      form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent page reload
+
+        // Retrieve form values
+        const fullName   = document.getElementById('fullName').value.trim();
+        const email      = document.getElementById('email').value.trim();
+        const phone      = document.getElementById('phone').value.trim();
+        const summary    = document.getElementById('summary').value.trim();
+        const education  = document.getElementById('education').value.trim();
+        const experience = document.getElementById('experience').value.trim();
+        const skills     = document.getElementById('skills').value.trim();
+
+        // Update CV preview with entered data
+        document.getElementById('cvName').textContent = fullName || "Your Name";
+        document.getElementById('cvEmail').textContent = email || "example@example.com";
+        document.getElementById('cvPhone').textContent = phone || "000-000-0000";
+        document.getElementById('cvSummary').textContent = summary || "Your professional summary will appear here.";
+        document.getElementById('cvEducation').textContent = education || "Your education details will appear here.";
+        document.getElementById('cvExperience').textContent = experience || "Your work experience will appear here.";
+        document.getElementById('cvSkills').textContent = skills || "Your skills will appear here.";
+      });
+    });
+  </script>
+</body>
+</html>
